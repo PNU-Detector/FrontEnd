@@ -36,79 +36,123 @@ class homepage extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children:[InkWell(
-                onTap: (){
-                  Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => schoolInfo()),
-                  );
-                },
-                child: Image.asset("assets/pnulogo.png"),
-              ),
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => schoolInfo()),
+                    );
+                  },
+                  child: Image.asset("assets/pnulogo.png"),
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text(
-                    "부산대학교 캠퍼스",
-                    style: TextStyle(
-                      color: Colors.white,
-                      letterSpacing: 5.0,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
+                  children: [
+                    Text(
+                      "부산대학교 캠퍼스",
+                      style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 5.0,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
                     ),
-                  )
-                    ,Text(
-                        "관광 해설앱",
-                        style: TextStyle(
-                            color: Colors.white,
-                            letterSpacing: 5.0,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold
-                        )
-                    )]
-                )]
+                    Text(
+                      "관광 해설앱",
+                      style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 5.0,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                )
+              ],
             ),
             SizedBox(height: 32.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
-                ButtonWidget("assets/building.png","건물"),
+                Expanded(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/building.png", "건물"),
+                  ),
+                ),
                 SizedBox(width: 16.0),
-                ButtonWidget("assets/sculpture.png","조형물"),
+                Expanded(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/sculpture.png", "조형물"),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ButtonWidget("assets/museum.png","박물관"),
+                Expanded(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/museum.png", "박물관"),
+                  ),
+                ),
                 SizedBox(width: 16.0),
-                ButtonWidget("assets/restaurant.png","식단표"),
+                Expanded(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/restaurant.png", "식단표"),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ButtonWidget("assets/convenience.png", "편의시설"),
+                Expanded(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/convenience.png", "편의시설"),
+                  ),
+                ),
                 SizedBox(width: 16.0),
-                ButtonWidget("assets/landmark.png","캠퍼스명소"),
+                Expanded(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/landmark.png", "캠퍼스명소"),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ButtonWidget("assets/map.png","캠퍼스맵"),
+                Expanded(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/map.png", "캠퍼스맵"),
+                  ),
+                ),
                 SizedBox(width: 16.0),
-                ButtonWidget("assets/map.png","캠퍼스맵"),
+                Expanded(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.9 , // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/map.png", "캠퍼스맵"),
+                  ),
+                ),
               ],
             ),
           ],
         ),
       ),
+
     );
   }
 }
+
 
 class ButtonWidget extends StatelessWidget {
   final String imagsrc;
