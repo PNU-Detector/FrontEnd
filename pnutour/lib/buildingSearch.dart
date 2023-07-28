@@ -124,7 +124,7 @@ class _buildingSearchState
             // 캡처된 이미지를 처리하는 코드 작성
           }
         },
-        child: Icon(Icons.camera),
+        child: Icon(Icons.camera_alt_outlined),
       ),
     );
   }

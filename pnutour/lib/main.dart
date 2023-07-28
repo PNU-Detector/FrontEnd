@@ -208,17 +208,17 @@ class ButtonWidget extends StatelessWidget {
                 }
                 else if (menuname == "식단표"){
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => restaurantInfo()),
+                    context, MaterialPageRoute(builder: (context) => RestaurantInfo()),
                   );
                 }
                 else if (menuname == "편의시설"){
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => convenience()),
+                    context, MaterialPageRoute(builder: (context) => Convenience()),
                   );
                 }
                 else if (menuname == "캠퍼스명소"){
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => landMarkInfo()),
+                    context, MaterialPageRoute(builder: (context) => LandMarkInfo()),
                   );
                 }
                 else if (menuname == "캠퍼스맵"){
