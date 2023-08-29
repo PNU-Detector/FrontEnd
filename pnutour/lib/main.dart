@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pnutour/buildingSearch.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:pnutour/building/buildingSearch.dart';
 import 'package:pnutour/campusMap.dart';
 import 'package:pnutour/convenience.dart';
 import 'package:pnutour/landMarkInfo.dart';
@@ -14,7 +15,13 @@ import 'package:pnutour/sculptureSearch.dart';
 //git test3
 //test
 //git test4
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NaverMapSdk.instance.initialize(
+      clientId: 'xvg31y6sqw',
+      onAuthFailed: (ex) {
+        print("********* 네이버맵 인증오류 : $ex *********");
+      });
   runApp(MyApp());
 }
 
@@ -50,7 +57,7 @@ class homepage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => schoolInfo()),
                     );
                   },
-                  child: Image.asset("assets/pnulogo.png"),
+                  child: Image.asset("assets/home/pnulogo.png"),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -81,15 +88,15 @@ class homepage extends StatelessWidget {
               children: [
                 Expanded(
                   child: FractionallySizedBox(
-                    widthFactor: 0.9, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/building.png", "건물"),
+                    widthFactor: 0.8, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/home/building.png", "건물"),
                   ),
                 ),
                 SizedBox(width: 16.0),
                 Expanded(
                   child: FractionallySizedBox(
-                    widthFactor: 0.9, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/sculpture.png", "조형물"),
+                    widthFactor: 0.8, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/home/sculpture.png", "조형물"),
                   ),
                 ),
               ],
@@ -100,15 +107,15 @@ class homepage extends StatelessWidget {
               children: [
                 Expanded(
                   child: FractionallySizedBox(
-                    widthFactor: 0.9, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/museum.png", "박물관"),
+                    widthFactor: 0.8, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/home/convenience.png", "편의시설"),
                   ),
                 ),
                 SizedBox(width: 16.0),
                 Expanded(
                   child: FractionallySizedBox(
-                    widthFactor: 0.9, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/restaurant.png", "식단표"),
+                    widthFactor: 0.8, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/home/landmark.png", "캠퍼스명소"),
                   ),
                 ),
               ],
@@ -119,38 +126,21 @@ class homepage extends StatelessWidget {
               children: [
                 Expanded(
                   child: FractionallySizedBox(
-                    widthFactor: 0.9, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/convenience.png", "편의시설"),
+                    widthFactor: 0.8, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/home/restaurant.png", "식단표"),
                   ),
                 ),
                 SizedBox(width: 16.0),
                 Expanded(
                   child: FractionallySizedBox(
-                    widthFactor: 0.9, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/landmark.png", "캠퍼스명소"),
+                    widthFactor: 0.8, // 상대적인 너비 비율 조정
+                    child: ButtonWidget("assets/home/map.png", "캠퍼스맵"),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.9, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/map.png", "캠퍼스맵"),
-                  ),
-                ),
-                SizedBox(width: 16.0),
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.9 , // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/map.png", "캠퍼스맵"),
-                  ),
-                ),
-              ],
-            ),
+
+
           ],
         ),
       ),
@@ -193,7 +183,7 @@ class ButtonWidget extends StatelessWidget {
               onTap: (){
                 if (menuname == "건물"){
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => buildingSearch()),
+                    context, MaterialPageRoute(builder: (context) => BuildingSearch()),
                   );
                 }
                 else if (menuname == "조형물"){
