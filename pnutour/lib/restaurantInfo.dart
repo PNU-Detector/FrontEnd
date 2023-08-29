@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
@@ -20,62 +22,144 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
     "문창회관"
   ];
 
-  List<List<String>> time = [["08:20~11:00","11:00~17:00","17:00~18:30"],["","11:00~15:00",""],["","11:00~14:00",""],["","11:00~14:00",""],["","10:30~16:30","16:30~18:20"],["","",""]];
-  List<List<String>> geumjungStudent = [
-    ["금정회관학생", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"]
-  ];
-
-  List<List<String>> geumjungEmployee = [
-    ["금정회관교직원식당", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"]
-  ];
-
-  List<List<String>> munchang = [
-    ["문창", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"]
-  ];
-
-  List<List<String>> hallStudent = [
-    ["학생회관학생", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"]
-  ];
-
-  List<List<String>> hallEmployee = [
-    ["학생회관교직원", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"]
-  ];
-
-  List<List<String>> satbull = [
-    ["샛벌", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"],
-    ["백미밥", "닭개장", "돈육버섯간장불고기", "푸실리햄볶음", "두부조림", "다시마채볶음", "김치"]
-  ];
+  List<String> time = ["","",""];
+  List<List<String>> meal = [[],[],[]];
+  DateTime today = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    getMenuByCrawlling();
+    _loadMealData();
+
+
   }
 
-  Future<void> getMenuByCrawlling() async {
-    final url =
-        'https://www.pusan.ac.kr/kor/CMS/MenuMgr/menuListOnBuilding.do?mCode=MN202&campus_gb=PUSAN&building_gb=R004&restaurant_code=PH002';
-    final response = await http.get(Uri.parse(url));
-    print(response.statusCode);
-    print(response.body);
-    if (response.statusCode == 200) {
-      // HTML 응답 파싱
-      var document = parse(response.body);
-      List<Element> menuItems =
-      document.querySelectorAll('.menuName').cast<Element>();
-      setState(() {}); // 새로운 데이터로 UI 업데이트
+  Future<void> _loadMealData() async {
+    if (true) const CircularProgressIndicator();
+    if(_selectedButtonIndex==0){
+      meal = await findMenu(today,"Geumjeong","student"); //금정회관 학생
     }
+    else if(_selectedButtonIndex==1){
+      meal = await findMenu(today,"Geumjeong","employee"); //금정회관 교직원
+    }
+    else if(_selectedButtonIndex==2){
+      meal = await findMenu(today,"Saesbeol","student"); //금정회관 교직원
+    }
+    else if(_selectedButtonIndex==3){
+      meal = await findMenu(today,"Pusan","employee"); //학생회관 교직원
+      print(meal[1]);
+    }
+    else if(_selectedButtonIndex==4){
+      meal = await findMenu(today,"Pusan","student"); //학생회관 학생
+      print(meal[1]);
+    }
+    else if(_selectedButtonIndex==5){
+      meal = [["푸드코트"," ","돈까스","함박세트","돈까스카레"," 닭다리카레","치킨가스","치킨마요덮밥","마라치킨마요덮밥","닭다리스테이크","(부타동)간장불고기덮밥","계란파볶음밥","돼지고기김치찌게","콩나물국밥","육개장","육개장칼국수","짜장면","짬뽕","꼬지어묵우동","우삼겹마라탕면","고기칼국수","우육탕면","양지쌀국수","왕만두국","공기밥","짜계치","통삼겹카레","큐브스테이크카레","탄탄면","꼬지어묵","밀면","쫄면","순두부짬뽕","가라아게카레덮밥"],["푸드코트"," ","돈까스","함박세트","돈까스카레"," 닭다리카레","치킨가스","치킨마요덮밥","마라치킨마요덮밥","닭다리스테이크","(부타동)간장불고기덮밥","계란파볶음밥","돼지고기김치찌게","콩나물국밥","육개장","육개장칼국수","짜장면","짬뽕","꼬지어묵우동","우삼겹마라탕면","고기칼국수","우육탕면","양지쌀국수","왕만두국","공기밥","짜계치","통삼겹카레","큐브스테이크카레","탄탄면","꼬지어묵","밀면","쫄면","순두부짬뽕","가라아게카레덮밥"],["푸드코트"," ","돈까스","함박세트","돈까스카레"," 닭다리카레","치킨가스","치킨마요덮밥","마라치킨마요덮밥","닭다리스테이크","(부타동)간장불고기덮밥","계란파볶음밥","돼지고기김치찌게","콩나물국밥","육개장","육개장칼국수","짜장면","짬뽕","꼬지어묵우동","우삼겹마라탕면","고기칼국수","우육탕면","양지쌀국수","왕만두국","공기밥","짜계치","통삼겹카레","큐브스테이크카레","탄탄면","꼬지어묵","밀면","쫄면","순두부짬뽕","가라아게카레덮밥"]]; //문창회관
+      time=["","",""];
+    }
+    // await로 비동기 처리 기다리기
+    setState(() {}); // 상태 업데이트를 위해 setState 호출
+  }
+
+  Future<List<List<String>>> findMenu(DateTime date,String restaurant,String type) async {
+    date = date.subtract(Duration(days: 1));
+    print("date"+date.toString());
+    List<List<String>> newMeal = [[],[],[]];
+    String url = 'https://m.pusan.ac.kr/ko/process/pusan/getMeal'+restaurant;
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded', // content-type 추가
+      },
+      body: {
+        'date': date.toString(),
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // JSON 파싱
+      final jsonData = jsonDecode(response.body);
+
+      if (jsonData['success'] == true) {
+        print("api success");
+        final responseJSON = jsonData['lists'];
+        for (var item in responseJSON) {
+          if(type=="student"&&(item['RESTAURANT_NAME']=="학생 식당"||item['RESTAURANT_NAME']=="식당")){
+            if (item['MENU_TYPE']=="B" ){
+              newMeal[0].add(item['MENU_TITLE']);
+              newMeal[0].add(item['MENU_CONTENT']);
+              newMeal[0].add("");
+              time[0]=item['BREAKFAST_TIME'];
+            }
+            else if(item['MENU_TYPE']=="L"){
+              newMeal[1].add(item['MENU_TITLE']);
+              newMeal[1].add(item['MENU_CONTENT']);
+              newMeal[1].add("");
+              time[1]=item['LUNCH_TIME'];
+            }
+            else if(item['MENU_TYPE']=="D"){
+              newMeal[2].add(item['MENU_TITLE']);
+              newMeal[2].add(item['MENU_CONTENT']);
+              newMeal[2].add("");
+              time[2]=item['DINNER_TIME'];
+            }
+          }
+          else if (!(item['RESTAURANT_NAME']=="학생 식당"||item['RESTAURANT_NAME']=="식당")){
+            if (item['MENU_TYPE']=="B"){
+              newMeal[0].add(item['MENU_TITLE']);
+              newMeal[0].add(item['MENU_CONTENT']);
+              newMeal[0].add("");
+              time[0]=item['BREAKFAST_TIME'];
+            }
+            else if(item['MENU_TYPE']=="L"){
+              newMeal[1].add(item['MENU_TITLE']);
+              newMeal[1].add(item['MENU_CONTENT']);
+              newMeal[1].add("");
+              time[1]=item['LUNCH_TIME'];
+            }
+            else if(item['MENU_TYPE']=="D"){
+              newMeal[2].add(item['MENU_TITLE']);
+              newMeal[2].add(item['MENU_CONTENT']);
+              newMeal[2].add("");
+              time[2]=item['DINNER_TIME'];
+            }
+          }
+
+
+        }
+      } else {
+        print('Request was successful, but "success" field is false.');
+      }
+    } else {
+      print('POST request failed with status: ${response.statusCode}');
+    }
+
+    int maxLength = 0;
+    for (List l in newMeal){
+      if (l.isEmpty){
+        l.add("식단 정보가 없습니다.");
+      }
+      int sumLength = 0;
+      for (String str in l) {
+        sumLength += str.length;
+      }
+      if (sumLength > maxLength) {
+        maxLength = sumLength;
+      }
+    }
+    //
+    // for (List l in newMeal){
+    //   int sumLength = 0;
+    //   for (String str in l) {
+    //     sumLength += str.length;
+    //   }
+    //   print(maxLength-sumLength);
+    //   l.add("    "*(maxLength-sumLength));
+    // }
+
+
+
+    return newMeal;
   }
 
   Color _getButtonColor(int index) {
@@ -84,6 +168,8 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double boxWidth = (screenWidth - 20) / 3; // 20은 간격 및 여백 등의 총 합
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -115,10 +201,12 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
                   icon: Icon(Icons.arrow_back, color: Colors.blue),
                   onPressed: () {
                     // 이전 버튼 클릭 시 처리
+                    today = today.subtract(Duration(days: 1));
+                    _loadMealData();
                   },
                 ),
                 Text(
-                  '2023.07.27(목)',
+                  today.year.toString() +"년 "+ today.month.toString().padLeft(2).replaceAll(" ", "0")+"월 "+today.day.toString().padLeft(2).replaceAll(" ", "0")+"일",
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -126,6 +214,8 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
                 IconButton(
                   icon: Icon(Icons.arrow_forward, color: Colors.blue),
                   onPressed: () {
+                    today = today.add(Duration(days: 1));
+                    _loadMealData();
                     // 다음 버튼 클릭 시 처리
                   },
                 ),
@@ -153,6 +243,7 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
                         setState(() {
                           _selectedButtonIndex = index;
                         });
+                        _loadMealData();
                       },
                       child: Container(
                         width: buttonNameList[index].length * 18.0,
@@ -205,7 +296,7 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
               children: [
                 Expanded(
                   child: Text(
-                    '조식'+time[_selectedButtonIndex][0],
+                    '조식'+time[0],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
@@ -216,7 +307,7 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
                 ),
                 Expanded(
                   child: Text(
-                    '중식'+time[_selectedButtonIndex][1],
+                    '중식'+time[1],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
@@ -227,7 +318,7 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
                 ),
                 Expanded(
                   child: Text(
-                    '석식'+time[_selectedButtonIndex][2],
+                    '석식'+time[2],
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
@@ -242,64 +333,49 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
             // 각 버튼에 해당하는 메뉴를 출력하는 박스들
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start, // 위쪽 정렬
               children: [
-                Expanded(
+                Container(
+                  height: 300,
+                  width: boxWidth,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: _buildMenuBox(
-                      _selectedButtonIndex == 0
-                          ? geumjungStudent[0]
-                          : _selectedButtonIndex == 1
-                          ? geumjungEmployee[0]
-                          : _selectedButtonIndex == 2
-                          ? satbull[0]
-                          : _selectedButtonIndex == 3
-                          ? hallEmployee[0]
-                          : _selectedButtonIndex == 4
-                          ? hallStudent[0]
-                          : munchang[0],
+                    padding: const EdgeInsets.symmetric(horizontal: 1.5),
+                    child: SingleChildScrollView(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: _buildMenuBox(meal[0]),
+                      ),
                     ),
                   ),
                 ),
-                Expanded(
+                Container(
+                  height: 300,
+                  width: boxWidth,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: _buildMenuBox(
-                      _selectedButtonIndex == 0
-                          ? geumjungStudent[1]
-                          : _selectedButtonIndex == 1
-                          ? geumjungEmployee[1]
-                          : _selectedButtonIndex == 2
-                          ? satbull[1]
-                          : _selectedButtonIndex == 3
-                          ? hallEmployee[1]
-                          : _selectedButtonIndex == 4
-                          ? hallStudent[1]
-                          : munchang[1],
+                    padding: const EdgeInsets.symmetric(horizontal: 1.5),
+                    child: SingleChildScrollView(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: _buildMenuBox(meal[1]),
+                      ),
                     ),
                   ),
                 ),
-                Expanded(
+                Container(
+                  height: 300,
+                  width: boxWidth,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: _buildMenuBox(
-                      _selectedButtonIndex == 0
-                          ? geumjungStudent[2]
-                          : _selectedButtonIndex == 1
-                          ? geumjungEmployee[2]
-                          : _selectedButtonIndex == 2
-                          ? satbull[2]
-                          : _selectedButtonIndex == 3
-                          ? hallEmployee[2]
-                          : _selectedButtonIndex == 4
-                          ? hallStudent[2]
-                          : munchang[2],
+                    padding: const EdgeInsets.symmetric(horizontal: 1.5),
+                    child: SingleChildScrollView(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: _buildMenuBox(meal[2]),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
+
             SizedBox(
               height: 10,
             ),
@@ -317,10 +393,14 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
                   // 지도를 표시하는 위젯이 여기에 들어가야합니다.
                   // 예시로 Text 위젯으로 대체하겠습니다.
                   child: Center(
-                    child: Text(
-                      '지도',
-                      style: TextStyle(fontSize: 24),
-                    ),
+                    child: NaverMap(
+                      options: const NaverMapViewOptions(
+                        initialCameraPosition: NCameraPosition(target: NLatLng(35.233052, 129.078465), zoom: 15, bearing: 280),
+                      ),
+                      onMapReady: (controler){
+                        print("네이버 맵 로딩 완료!");
+                      },
+                    )
                   ),
                 ),
               ),
@@ -334,6 +414,7 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
   // 메뉴들을 출력하는 박스를 생성하는 메서드
   Widget _buildMenuBox(List<String> menuList) {
     return Container(
+      height: 300,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -353,3 +434,4 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
     );
   }
 }
+
