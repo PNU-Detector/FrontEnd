@@ -135,7 +135,7 @@ class _ConvenienceState extends State<Convenience> {
                                         });
                                       },
                                     ),
-                                    Text('가장 가까운 시설 보기'),
+                                    Text('가장 가까운 시설'),
                                   ],
                                 ),
                               ),
