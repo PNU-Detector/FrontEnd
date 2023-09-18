@@ -21,6 +21,8 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
     "학생회관 학생",
     "문창회관"
   ];
+  List<double> latitude = [35.235388519818244,35.235388519818244,35.23415265271931,35.23509909319508,35.23509909319508,35.233944378942546];
+  List<double> longitude = [129.0801642000777,129.0801642000777,129.07971527155115,129.07642245177314,129.07642245177314,129.08213175748338];
 
   List<String> time = ["","",""];
   List<List<String>> meal = [[],[],[]];
@@ -394,10 +396,13 @@ class _RestaurantInfoState extends State<RestaurantInfo> {
                   // 예시로 Text 위젯으로 대체하겠습니다.
                   child: Center(
                     child: NaverMap(
-                      options: const NaverMapViewOptions(
-                        initialCameraPosition: NCameraPosition(target: NLatLng(35.233052, 129.078465), zoom: 15, bearing: 280),
+                        forceGesture: true,
+                      options:  NaverMapViewOptions(
+
+                        initialCameraPosition: NCameraPosition(target: NLatLng(latitude[_selectedButtonIndex], longitude[_selectedButtonIndex]), zoom: 15, bearing: 280),
                       ),
                       onMapReady: (controler){
+                        final marker = NMarker(id: "test", position: NLatLng(latitude[_selectedButtonIndex], longitude[_selectedButtonIndex]));
                         print("네이버 맵 로딩 완료!");
                       },
                     )
