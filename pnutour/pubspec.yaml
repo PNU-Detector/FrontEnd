@@ -31,14 +31,12 @@ dependencies:
   flutter:
     sdk: flutter
   camera: ^0.10.4
-  tflite_flutter: ^0.9.1
-#  tflite_flutter_helper: ^0.3.1
-  tflite_flutter_helper_plus: ^0.0.2
   image: ^3.3.0
   path_provider: ^2.0.2
   http: ^1.1.0
   html: ^0.15.0
   flutter_naver_map: ^1.0.2
+  dio: ^5.3.2
 
 
 
@@ -66,8 +64,6 @@ flutter:
     - assets/home/
     - assets/landmark/
     - assets/schoolInfo/
-    - assets/labels.txt
-    - assets/model.tflite
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

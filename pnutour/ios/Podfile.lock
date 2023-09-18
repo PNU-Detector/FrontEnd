@@ -11,36 +11,17 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - TensorFlowLiteC (2.13.0):
-    - TensorFlowLiteC/Core (= 2.13.0)
-  - TensorFlowLiteC/Core (2.13.0)
-  - TensorFlowLiteSwift (2.13.0):
-    - TensorFlowLiteSwift/Core (= 2.13.0)
-  - TensorFlowLiteSwift/Core (2.13.0):
-    - TensorFlowLiteC (= 2.13.0)
-  - tflite_flutter (0.1.0):
-    - Flutter
-    - TensorFlowLiteSwift
-  - tflite_flutter_helper_plus (0.0.1):
-    - Flutter
-  - tflite_flutter_plus (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
   - flutter_naver_map (from `.symlinks/plugins/flutter_naver_map/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
-  - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
-  - tflite_flutter_helper_plus (from `.symlinks/plugins/tflite_flutter_helper_plus/ios`)
-  - tflite_flutter_plus (from `.symlinks/plugins/tflite_flutter_plus/ios`)
 
 SPEC REPOS:
   trunk:
     - NMapsGeometry
     - NMapsMap
-    - TensorFlowLiteC
-    - TensorFlowLiteSwift
 
 EXTERNAL SOURCES:
   camera_avfoundation:
@@ -51,12 +32,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_naver_map/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
-  tflite_flutter:
-    :path: ".symlinks/plugins/tflite_flutter/ios"
-  tflite_flutter_helper_plus:
-    :path: ".symlinks/plugins/tflite_flutter_helper_plus/ios"
-  tflite_flutter_plus:
-    :path: ".symlinks/plugins/tflite_flutter_plus/ios"
 
 SPEC CHECKSUMS:
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
@@ -65,11 +40,6 @@ SPEC CHECKSUMS:
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  TensorFlowLiteC: ac3334fa9dbc90e4744b4497312a393fd02b5408
-  TensorFlowLiteSwift: 1d8320fbf292054eb50ef0b347a4b17a92b49731
-  tflite_flutter: bf9c7d5c7ef011034c607d943d432623673c1c11
-  tflite_flutter_helper_plus: 33b8f41f9d67ab70280309ed75ff6c709eb4bec6
-  tflite_flutter_plus: f8d7529404eb499ffd29d5682625f8b5b3dddb3a
 
 PODFILE CHECKSUM: 311d93ab78944bce3dc5e05e4dfe48fe0564a96c
 
