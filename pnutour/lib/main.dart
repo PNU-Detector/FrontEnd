@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
-import 'package:pnutour/building/buildingSearch.dart';
+import 'package:pnutour/Building/buildingCamera.dart';
+import 'package:pnutour/Building/buildingInfo.dart';
 import 'package:pnutour/campusMap.dart';
 import 'package:pnutour/convenience.dart';
 import 'package:pnutour/landMarkInfo.dart';
-import 'package:pnutour/museumSearch.dart';
 import 'package:pnutour/restaurantInfo.dart';
 import 'package:pnutour/schoolInfo.dart';
-import 'package:pnutour/sculptureSearch.dart';
+import 'package:pnutour/sculpture/sculptureCamera.dart';
 
 
-// git test
-// git test2
-//git test3
-//test
-//git test4
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NaverMapSdk.instance.initialize(
@@ -168,8 +164,8 @@ class ButtonWidget extends StatelessWidget {
       alignment: Alignment.center,
       child: Container(
 
-          width: 80,
-          height: 103,
+          width: 70,
+          height: 80,
           decoration: BoxDecoration(
               color: Colors.white,
 
@@ -183,17 +179,13 @@ class ButtonWidget extends StatelessWidget {
               onTap: (){
                 if (menuname == "건물"){
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => BuildingSearch()),
+                    // context, MaterialPageRoute(builder: (context) => buildingCamera()),
+                    context, MaterialPageRoute(builder: (context) => buildingInfo(buildingCode: "b201")),
                   );
                 }
                 else if (menuname == "조형물"){
                   Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => scultureSerach()),
-                  );
-                }
-                else if (menuname == "박물관"){
-                  Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => museumSearch()),
+                    context, MaterialPageRoute(builder: (context) => sculptureCamera()),
                   );
                 }
                 else if (menuname == "식단표"){
@@ -217,13 +209,17 @@ class ButtonWidget extends StatelessWidget {
                   );
                 }
               },
-              child: Image.asset('$imagsrc'),
+              child: Image.asset(
+                '$imagsrc',
+                width: 60, // 이미지 너비 조절
+                height: 60, // 이미지 높이 조절
+              ),
             ),
               Text(this.menuname,
                   style: TextStyle(
                       color: Colors.black,
                       letterSpacing: 2.0,
-                      fontSize: 15,
+                      fontSize: 13,
                       fontWeight: FontWeight.bold
                   ))
             ],
