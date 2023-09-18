@@ -109,6 +109,7 @@ class _CampusMapState extends State<campusMap> {
             ),
 //지도 들어가야함
           Expanded(child:  NaverMap(
+            forceGesture: true,
             options: const NaverMapViewOptions(
               initialCameraPosition: NCameraPosition(target: NLatLng(35.233052, 129.078465), zoom: 15, bearing: 280),
             ),
