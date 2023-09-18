@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:pnutour/buildingCameraLocation.dart';
 class LandMarkInfo extends StatefulWidget {
   const LandMarkInfo({Key? key}) : super(key: key);
 
@@ -37,6 +38,7 @@ class _LandMarkInfoState extends State<LandMarkInfo> {
   ];
   bool _nearbyOnly = false;
   bool _showAll = true;
+  String buildingCode="위치정보 없음";
 
   Map<String,Place> _places = {
     "10.16기념관":Place(
@@ -230,7 +232,15 @@ class _LandMarkInfoState extends State<LandMarkInfo> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final code = await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => buildingCameraLocation(),
+                    ));
+                    print(buildingCode);
+                    setState(() {
+                      buildingCode = code;
+                    });
+                  },
                   child: Row(
                     children: [
                       SizedBox(width: 30,),
@@ -276,7 +286,7 @@ class _LandMarkInfoState extends State<LandMarkInfo> {
                         color: Color.fromRGBO(6, 119, 229, 0.6509803921568628),
                       ),
                     ),
-                    Text("위치정보 없음"),
+                    Text(buildingCode),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -500,6 +510,7 @@ class _LandMarkInfoState extends State<LandMarkInfo> {
               Image.asset(imagePath), // 이미지 추가
               SizedBox(height: 16),
               SizedBox(height:300,child:  NaverMap(
+                forceGesture: true,
                 options: const NaverMapViewOptions(
                   initialCameraPosition: NCameraPosition(target: NLatLng(35.233052, 129.078465), zoom: 15, bearing: 280),
                 ),
