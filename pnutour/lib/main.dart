@@ -8,11 +8,12 @@ import 'package:pnutour/landMarkInfo.dart';
 import 'package:pnutour/restaurantInfo.dart';
 import 'package:pnutour/schoolInfo.dart';
 import 'package:pnutour/sculpture/sculptureCamera.dart';
-
+import 'package:flutter/services.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   await NaverMapSdk.instance.initialize(
       clientId: 'xvg31y6sqw',
       onAuthFailed: (ex) {
@@ -40,105 +41,108 @@ class homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => schoolInfo()),
-                    );
-                  },
-                  child: Image.asset("assets/home/pnulogo.png"),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "부산대학교 캠퍼스",
-                      style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 5.0,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
+        child: Container(
+          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width,maxHeight: MediaQuery.of(context).size.height),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => schoolInfo()),
+                      );
+                    },
+                    child: Image.asset("assets/home/pnulogo.png"),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "부산대학교 캠퍼스",
+                        style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 5.0,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "관광 해설앱",
+                        style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 5.0,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(height: 32.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7, // 상대적인 너비 비율 조정
+                      child: ButtonWidget("assets/home/building.png", "건물"),
                     ),
-                    Text(
-                      "관광 해설앱",
-                      style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 5.0,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                )
-              ],
-            ),
-            SizedBox(height: 32.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.8, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/home/building.png", "건물"),
                   ),
-                ),
-                SizedBox(width: 16.0),
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.8, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/home/sculpture.png", "조형물"),
+                  SizedBox(width: 16.0),
+                  Expanded(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7, // 상대적인 너비 비율 조정
+                      child: ButtonWidget("assets/home/sculpture.png", "조형물"),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.8, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/home/convenience.png", "편의시설"),
+                ],
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7, // 상대적인 너비 비율 조정
+                      child: ButtonWidget("assets/home/convenience.png", "편의시설"),
+                    ),
                   ),
-                ),
-                SizedBox(width: 16.0),
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.8, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/home/landmark.png", "캠퍼스명소"),
+                  SizedBox(width: 16.0),
+                  Expanded(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7, // 상대적인 너비 비율 조정
+                      child: ButtonWidget("assets/home/landmark.png", "캠퍼스명소"),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.8, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/home/restaurant.png", "식단표"),
+                ],
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7, // 상대적인 너비 비율 조정
+                      child: ButtonWidget("assets/home/restaurant.png", "식단표"),
+                    ),
                   ),
-                ),
-                SizedBox(width: 16.0),
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.8, // 상대적인 너비 비율 조정
-                    child: ButtonWidget("assets/home/map.png", "캠퍼스맵"),
+                  SizedBox(width: 16.0),
+                  Expanded(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.7, // 상대적인 너비 비율 조정
+                      child: ButtonWidget("assets/home/map.png", "캠퍼스맵"),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
 
 
-          ],
-        ),
+            ],
+          ),
+        )
       ),
 
     );
@@ -156,7 +160,7 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      height: 150,
+      height: 110,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(9)
@@ -179,8 +183,9 @@ class ButtonWidget extends StatelessWidget {
               onTap: (){
                 if (menuname == "건물"){
                   Navigator.push(
-                    // context, MaterialPageRoute(builder: (context) => buildingCamera()),
-                    context, MaterialPageRoute(builder: (context) => buildingInfo(buildingCode: "b201")),
+                    context, MaterialPageRoute(builder: (context) => buildingCamera()),
+                    // context, MaterialPageRoute(builder: (context) => buildingInfo(buildingCode: "b201")),
+
                   );
                 }
                 else if (menuname == "조형물"){

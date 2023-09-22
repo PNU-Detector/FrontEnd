@@ -12,10 +12,9 @@ class _ConvenienceState extends State<Convenience> {
   List<String> buttonNameList = [
     "카페",
     "식당",
-    "자판기",
-    "흡연구역",
-    "운동시설",
-    "우체국",
+    "프린트",
+    "편의점",
+    "기타"
   ];
   bool _nearbyOnly = false;
   bool _showAll = true;

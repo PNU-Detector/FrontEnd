@@ -118,20 +118,13 @@ class _buildingCameraLocationState extends State<buildingCameraLocation> {
 
                     // API 요청 코드...
                     // 촬영된 사진을 API에 전송 (http 패키지 사용)
-                    String url = 'http://192.168.25.20:8000/detect/';
+                    String url = 'http://54.180.198.149:8000/detect/';
                     MultipartFile _file=MultipartFile.fromFileSync(picture!.path,  contentType: new MediaType("image", "jpg"));
 
                     FormData _formData = FormData.fromMap({"file": _file});
                     Dio dio = Dio();
                     dio.options.contentType = 'multipart/form-data';
                     final response = await dio.post(url, data: _formData);
-                    print('========================');
-                    print("status: "+ response.statusCode.toString());
-                    print("error: "+response.data['error'].toString());
-                    print("label: "+response.data['label'].toString());
-                    print('========================');
-
-
                     if (response.statusCode == 200) {
                       // 성공적인 응답 처리
                       // API 요청이 성공한 경우 다음 페이지로 이동
@@ -154,6 +147,8 @@ class _buildingCameraLocationState extends State<buildingCameraLocation> {
                         errorMessage = '오류가 발생했습니다. 다시 시도해주세요.';
                       });
                     }
+
+
                   } catch (e) {
                     setState(() {
                       isLoading = false; // 로딩 상태 해제

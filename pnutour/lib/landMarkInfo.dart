@@ -26,16 +26,7 @@ class Place {
 }
 
 class _LandMarkInfoState extends State<LandMarkInfo> {
-  int _selectedButtonIndex = 0;
-  List<String> buttonNameList = [
-    "전체",
-    "조형물",
-    "카더라",
-    "흡연구역",
-    "운동시설",
-    "우체국",
-    "자판기",
-  ];
+
   bool _nearbyOnly = false;
   bool _showAll = true;
   String buildingCode="위치정보 없음";
@@ -190,9 +181,6 @@ class _LandMarkInfoState extends State<LandMarkInfo> {
     super.initState();
   }
 
-  Color _getButtonColor(int index) {
-    return _selectedButtonIndex == index ? Colors.blue : Colors.white;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -344,62 +332,6 @@ class _LandMarkInfoState extends State<LandMarkInfo> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 50,
-              child: PageView.builder(
-                controller: PageController(viewportFraction: 0.3),
-                onPageChanged: (index) {
-                  setState(() {
-                    _selectedButtonIndex = index;
-                  });
-                },
-                itemCount: buttonNameList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        // 버튼 클릭 시 선택된 버튼 인덱스 설정
-                        setState(() {
-                          _selectedButtonIndex = index;
-                        });
-                      },
-                      child: Container(
-                        width: buttonNameList[index].length * 18.0,
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            buttonNameList[index],
-                            style: TextStyle(
-                              color: _selectedButtonIndex == index
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontSize: 18, // 버튼의 높이로 글자 크기 설정
-                            ),
-                          ),
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return Colors.blue; // 버튼이 눌린 상태에서는 파란색 배경
-                          }
-                          return _getButtonColor(index); // 기본적으로는 _getButtonColor 함수에서 색상 반환
-                        }),
-                        side: MaterialStateProperty.all(BorderSide(color: Colors.blue, width: 1)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        minimumSize: MaterialStateProperty.all(Size.zero),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
             _buildLandmarkBoxs(_showAll, _nearbyOnly)
           ],
         ),
