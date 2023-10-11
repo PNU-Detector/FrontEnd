@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:pnutour/Building//buildingInfo.dart';
+import 'package:pnutour/view/Building//buildingInfoView.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
-
-class buildingCamera extends StatefulWidget {
+class buildingCameraLocation extends StatefulWidget {
   @override
-  _buildingCameraState createState() => _buildingCameraState();
+  _buildingCameraLocationState createState() => _buildingCameraLocationState();
 }
 
-class _buildingCameraState extends State<buildingCamera> {
+class _buildingCameraLocationState extends State<buildingCameraLocation> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
   bool isLoading = false; // API 요청 중 여부를 나타내는 변수
@@ -126,40 +125,31 @@ class _buildingCameraState extends State<buildingCamera> {
                     Dio dio = Dio();
                     dio.options.contentType = 'multipart/form-data';
                     final response = await dio.post(url, data: _formData);
-                      print('========================');
-                      print("status: "+ response.statusCode.toString());
-                      print("error: "+response.data['error'].toString());
-                      print("label: "+response.data['label'].toString());
-                      print('========================');
+                    if (response.statusCode == 200) {
+                      // 성공적인 응답 처리
+                      // API 요청이 성공한 경우 다음 페이지로 이동
+                      if (response.data['label']!=null) {
+                        String buildingCode = response.data['label'];
+                        setState(() {
+                          isLoading = false; // 로딩 상태 해제
+                        });
+                        Navigator.of(context).pop(buildingCode);
+                      }else{
+                        setState(() {
+                          isLoading = false; // 로딩 상태 해제
+                          errorMessage = '건물인식실패, 다시 시도해주세요.';
+                        });
+                      }
+                    }
+                    else {
+                      setState(() {
+                        isLoading = false; // 로딩 상태 해제
+                        errorMessage = '오류가 발생했습니다. 다시 시도해주세요.';
+                      });
+                    }
 
 
-                      if (response.statusCode == 200) {
-                        // 성공적인 응답 처리
-                        // API 요청이 성공한 경우 다음 페이지로 이동
-                        if (response.data['label']!=null) {
-                          String buildingCode = response.data['label'];
-                          setState(() {
-                            isLoading = false; // 로딩 상태 해제
-                          });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => buildingInfo(buildingCode : buildingCode)),
-                          );
-                        }else{
-                          setState(() {
-                            isLoading = false; // 로딩 상태 해제
-                            errorMessage = '건물인식실패, 다시 시도해주세요.';
-                          });
-                        }
-                      }
-                      else {
-                            setState(() {
-                            isLoading = false; // 로딩 상태 해제
-                            errorMessage = '오류가 발생했습니다. 다시 시도해주세요.';
-                            });
-                      }
-                    } catch (e) {
+                  } catch (e) {
                     setState(() {
                       isLoading = false; // 로딩 상태 해제
                       errorMessage = '오류가 발생했습니다. 다시 시도해주세요.';

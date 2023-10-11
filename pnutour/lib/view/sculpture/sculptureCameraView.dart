@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:pnutour/Building//buildingInfo.dart';
+import 'package:pnutour/view/Building/buildingInfoView.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -143,7 +143,7 @@ class _sculptureCameraState extends State<sculptureCamera> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => buildingInfo(buildingCode : buildingCode)),
+                              builder: (context) => BuildingInfo(buildingCode : buildingCode)),
                         );
                       }else{
                         setState(() {

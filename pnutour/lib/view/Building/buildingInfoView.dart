@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 
-class buildingInfo extends StatefulWidget {
+class BuildingInfo extends StatefulWidget {
   final String buildingCode;
-  const buildingInfo({required this.buildingCode, Key? key}) : super(key: key);
+  const BuildingInfo({required this.buildingCode, Key? key}) : super(key: key);
 
   @override
   _BuildingInfoState createState() => _BuildingInfoState();
@@ -39,7 +39,7 @@ class Info {
   }
 }
 
-class _BuildingInfoState extends State<buildingInfo> {
+class _BuildingInfoState extends State<BuildingInfo> {
   Info info = Info(code: "", name: "", info: "", latitude: "", longitude: "");
   Uint8List? imageData;
 
