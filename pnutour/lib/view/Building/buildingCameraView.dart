@@ -119,7 +119,7 @@ class _BuildingCameraState extends State<BuildingCamera> {
 
                     // API 요청 코드...
                     // 촬영된 사진을 API에 전송 (http 패키지 사용)
-                    String url = 'http://54.180.198.149:8000/detect/';
+                    String url = 'http://54.180.198.149:8083/detect/';
                     MultipartFile _file=MultipartFile.fromFileSync(picture!.path,  contentType: new MediaType("image", "jpg"));
 
                     FormData _formData = FormData.fromMap({"file": _file});

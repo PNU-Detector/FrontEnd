@@ -53,7 +53,7 @@ class _BuildingInfoState extends State<BuildingInfo> {
     final buildingCode = widget.buildingCode;
 
     // 정보 조회 API 호출
-    final apiUrl = "http://54.180.198.149:8080/structures/$buildingCode";
+    final apiUrl = "http://54.180.198.149:8082/structures/$buildingCode";
     final response1 = await http.get(
       Uri.parse(apiUrl),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
@@ -70,7 +70,7 @@ class _BuildingInfoState extends State<BuildingInfo> {
     }
 
     // 이미지를 가져오는 엔드포인트
-    final imageUrl = "http://54.180.198.149:8080/structures/$buildingCode/images";
+    final imageUrl = "http://54.180.198.149:8082/structures/$buildingCode/images";
     final response2 = await http.get(Uri.parse(imageUrl));
     print(response2.statusCode);
     print(response2.body.toString());

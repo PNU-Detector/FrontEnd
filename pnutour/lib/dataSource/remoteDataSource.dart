@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:pnutour/model/place.dart';
 
 class RemoteDataSource{
-  String host = "http://54.180.198.149:8080";
+  String host = "http://54.180.198.149:8082";
   Future<Uint8List> getPlaceImage(String? buildingCode) async{
     print("image");
     final imageUrl = "$host/structures/$buildingCode/images";
