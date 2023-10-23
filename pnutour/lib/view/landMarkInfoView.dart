@@ -59,6 +59,25 @@ class _LandMarkInfoViewState extends State<LandMarkInfoView> {
       });
     }
   }
+
+  Future<void> _loadLocation() async {
+    try {
+      isLoading = true;
+      await landmarkViewModel.getBuildingName(buildingCode);
+      setState(() {
+        buildingName = landmarkViewModel.buildingName;
+        _loadLandmarkOrderByName();
+        isLoading = false; // 로딩 완료
+      });
+    } catch (e) {
+      // 에러 처리
+      print("API 호출 에러: $e");
+      setState(() {
+        isLoading = false; // 로딩 완료
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -110,7 +129,7 @@ class _LandMarkInfoViewState extends State<LandMarkInfoView> {
                       );
                       setState(() {
                         buildingCode = code;
-                        buildingName = code.replaceAll(RegExp(r'[^0-9]'), '');
+                        _loadLocation();
                       });
                     },
                     child: Row(
